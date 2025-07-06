@@ -16,15 +16,9 @@ const projectsData: Project[] = [
     title: "Dulap din Lemn Masiv Restaurat",
     description:
       "Am redat splendoarea originală acestui dulap impunător din lemn masiv, transformându-l într-o piesă centrală atemporală.",
-    images: ["/images/1.jpeg", "/images/2.jpeg", "/images/3.jpeg", "/images/5.jpeg"],
+    images: ["/images/7.jpeg", "/images/4.jpeg", "/images/1.jpeg", "/images/2.jpeg"],
   },
-  {
-    id: "proiect-dulap-renovat",
-    title: "Dulap Restaurat cu Design Reimaginat",
-    description:
-      "O transformare completă pentru acest dulap, ce a beneficiat de un design reimaginat și o restaurare minuțioasă, aducându-l în era modernă.",
-    images: ["/images/4.jpeg", "/images/7.jpeg"],
-  },
+  
   {
     id: "proiect-dulap-simplist",
     title: "Set minimalist: Dulap și Noptiere",
@@ -44,15 +38,9 @@ const projectsData: Project[] = [
     title: "Uși de Dulap cu Pictură Manuală Unică",
     description:
       "Aceste uși de dulap au fost transformate printr-o pictură manuală, devenind o declarație artistică distinctivă.",
-    images: ["/images/17.jpeg", "/images/18.jpeg"],
+    images: ["/images/17.jpeg", "/images/18.jpeg","/images/20.jpeg", "/images/22.jpeg"],
   },
-  {
-    id: "proiect-usi-dulap-pictate-a-doua",
-    title: "Uși de Dulap cu Design Pictat Manual",
-    description:
-      "O altă pereche de uși de dulap, aduse la viață printr-un design pictat manual, adăugând personalitate și stil.",
-    images: ["/images/20.jpeg", "/images/22.jpeg"],
-  },
+  
 ];
 
 // Tiparea butonului reutilizabil
