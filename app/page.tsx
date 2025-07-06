@@ -1,103 +1,222 @@
-import Image from "next/image";
+"use client";
+import { useState } from 'react';
+import React from 'react';
+
+const projectsData = [
+  {
+    id: 'proiect-dulap-lemn-masiv',
+    title: 'Dulap din Lemn Masiv Restaurat',
+    description: 'Am redat splendoarea originală acestui dulap impunător din lemn masiv, transformându-l într-o piesă centrală atemporală.',
+    images: [
+      "/images/1.jpeg",
+      "/images/2.jpeg",
+      "/images/3.jpeg",
+      "/images/5.jpeg",
+    ],
+  },
+  {
+    id: 'proiect-dulap-renovat',
+    title: 'Dulap Restaurat cu Design Reimaginat',
+    description: 'O transformare completă pentru acest dulap, ce a beneficiat de un design reimaginat și o restaurare minuțioasă, aducându-l în era modernă.',
+    images: [
+      "/images/4.jpeg",
+      "/images/7.jpeg",
+    ],
+  },
+  {
+    id: 'proiect-dulap-simplist',
+    title: 'Set minimalist: Dulap și Noptiere',
+    description: 'Acest set a fost recondiționat cu un accent pe simplitate, funcționalitate și linii curate, perfect pentru un interior modern.',
+    images: [
+      "/images/8.jpeg",
+      "/images/9.jpeg",
+      "/images/11.jpeg",
+    ],
+  },
+  {
+    id: 'proiect-set-scaune-canapea',
+    title: 'Set Elegant de Scaune și Canapea',
+    description: 'Un set elegant de scaune și o canapea asortată, restaurate pentru a adăuga rafinament oricărui spațiu de locuit.',
+    images: [
+      "/images/13.jpeg",
+      "/images/12.jpeg",
+      "/images/10.jpeg",
+      "/images/16.jpeg",
+      "/images/19.jpeg",
+    ],
+  },
+  {
+    id: 'proiect-usi-dulap-pictate-prima',
+    title: 'Uși de Dulap cu Pictură Manuală Unică',
+    description: 'Aceste uși de dulap au fost transformate printr-o pictură manuală, devenind o declarație artistică distinctivă.',
+    images: [
+      "/images/17.jpeg",
+      "/images/18.jpeg",
+    ],
+  },
+  {
+    id: 'proiect-usi-dulap-pictate-a-doua',
+    title: 'Uși de Dulap cu Design Pictat Manual',
+    description: 'O altă pereche de uși de dulap, aduse la viață printr-un design pictat manual, adăugând personalitate și stil.',
+    images: [
+      "/images/20.jpeg",
+      "/images/22.jpeg",
+    ],
+  },
+];
+
+// Reusable Button Component
+const Button = ({ children, className = '', ...props }) => (
+  <button
+    className={`px-6 py-3 rounded-full font-medium transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
+    {...props}
+  >
+    {children}
+  </button>
+);
+
+function Hero() {
+  return (
+    <div className="relative flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-white px-4 text-center overflow-hidden">
+      {/* Optional: Add a subtle background pattern or texture for visual interest */}
+      <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: "url('/images/hero-bg-texture.jpg')" }}></div>
+
+      <div className="relative z-10 max-w-5xl mx-auto py-16">
+        <h1 className="text-6xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight">
+          Mobilier <span className="text-yellow-400">Restaurat</span> cu Suflet
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
+          Redăm viață și strălucire pieselor de mobilier vechi, transformându-le în opere de artă funcționale pentru spațiul tău modern.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+        
+          <Button className="bg-transparent border-2 border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-gray-900">
+            Contactează-ne
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectCard({ project }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const goToNextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % project.images.length);
+  };
+
+  const goToPreviousImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + project.images.length) % project.images.length);
+  };
+
+  return (
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl">
+      <div className="relative h-64 overflow-hidden">
+        <img
+          src={project.images[currentImageIndex]}
+          alt={`${project.title} - imagine ${currentImageIndex + 1}`}
+          className="w-full h-full object-cover transition-opacity duration-500 ease-in-out"
+        />
+        {project.images.length > 1 && (
+          <>
+            <button
+              onClick={goToPreviousImage}
+              className="absolute left-3 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-colors focus:outline-none"
+              aria-label="Previous image"
+            >
+              &#8249;
+            </button>
+            <button
+              onClick={goToNextImage}
+              className="absolute right-3 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-colors focus:outline-none"
+              aria-label="Next image"
+            >
+              &#8250;
+            </button>
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center space-x-2">
+              {project.images.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`block w-2.5 h-2.5 rounded-full ${idx === currentImageIndex ? 'bg-yellow-500' : 'bg-gray-300 bg-opacity-70'} cursor-pointer`}
+                  onClick={() => setCurrentImageIndex(idx)}
+                  aria-label={`View image ${idx + 1}`}
+                ></span>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <div className="p-6">
+        <h3 className="text-3xl font-bold text-gray-800 mb-3">{project.title}</h3>
+        <p className="text-gray-700 text-lg leading-relaxed">{project.description}</p>
+      </div>
+    </div>
+  );
+}
+
+function Projects() {
+  return (
+    <section className="bg-gray-100 py-16 px-4">
+      <div className="container mx-auto">
+        <h2 className="text-5xl font-extrabold text-center text-gray-900 mb-16">
+          Proiecte <span className="text-yellow-600">Recente</span>
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {projectsData.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="bg-gray-900 text-gray-300 py-12 px-4">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+        <div className="mb-8 md:mb-0">
+          <h4 className="text-2xl font-bold text-white mb-2">Mobila Restaurată</h4>
+          <p className="text-gray-400">Redăm viață</p>
+        </div>
+        <div className="mb-8 md:mb-0">
+          <h5 className="text-xl font-semibold text-white mb-3">Servicii</h5>
+          <ul className="space-y-2">
+            <li><a href="#" className="hover:text-yellow-400 transition-colors duration-200">Restaurare Mobilier</a></li>
+            <li><a href="#" className="hover:text-yellow-400 transition-colors duration-200">Recondiționare Obiecte</a></li>
+            <li><a href="#" className="hover:text-yellow-400 transition-colors duration-200">Design Personalizat</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 className="text-xl font-semibold text-white mb-3">Contact</h5>
+          
+          <p className="text-gray-400">Telefon: +40 771 020 336</p>
+          <div className="flex justify-center md:justify-start space-x-4 mt-4">
+            {/* Add social media icons here */}
+            <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200">
+              <i className="fab fa-facebook-f text-2xl"></i> {/* Requires FontAwesome */}
+            </a>
+            <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200">
+              <i className="fab fa-instagram text-2xl"></i> {/* Requires FontAwesome */}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-500 text-sm">
+        &copy; {new Date().getFullYear()} Mobila Restaurată. Toate drepturile rezervate.
+      </div>
+    </footer>
+  );
+}
+
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <Hero />
+      <Projects />
+      <Footer />
     </div>
   );
 }
