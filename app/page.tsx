@@ -66,7 +66,12 @@ const projectsData = [
 ];
 
 // Reusable Button Component
-const Button = ({ children, className = '', ...props }) => (
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  children: React.ReactNode;
+  className?: string;
+};
+
+const Button: React.FC<ButtonProps> = ({ children, className = '', ...props }) => (
   <button
     className={`px-6 py-3 rounded-full font-medium transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
     {...props}
